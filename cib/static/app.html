@@ -24,7 +24,7 @@
 		<canvas id="pred_canvas" class="" hidden=true></canvas>
 		<br />
 
-		<button id="save" type="button" class="btn btn-primary btn-lg btn-block">
+		<button id="save" type="button" class="btn btn-primary btn-lg btn-block" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Processing">
 		   Submit Image
 		</button>
 
@@ -67,11 +67,13 @@
 
 		function predict() 
 		{
+            $("#save").button('loading');
+            
 			var formData = new FormData();
 		
-			var img_canvas=document.getElementById("img_canvas");
+			var img_canvas = document.getElementById("img_canvas");
 			fileData = img_canvas.toDataURL('image/jpeg');
-		
+		    
 			formData.append('imageData', fileData);
 		
 			$.ajax({
@@ -80,8 +82,16 @@
 				data: formData,
 				contentType: false,
 				processData: false,
-				success: function (data) { show_prediction(data); },
-				error: function (data) { alert('There was an error uploading your file!'); }
+				success: function (data) 
+                         { 
+                             show_prediction(data); 
+                             $("#save").button('reset');
+                         },
+				error: function (data) 
+                       { 
+                           $("#save").button('reset');
+                           alert('There was an error uploading your file!');
+                       }
 			});
 		}
 

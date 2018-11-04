@@ -17,16 +17,16 @@ class Predict:
             self.learn = create_cnn(data, models.resnet34, metrics=error_rate, pretrained=False)
             self.learn.load('stage-5')
     
-    def predict(self,fname):
-        img = open_image(fname)
+    def predict(self,stream):
+        img = open_image(stream)
         pred_class,pred_idx,outputs = self.learn.predict(img)
         
         probs = outputs.numpy()
         probs = probs / probs.sum() * 100.0
 
-        df = pd.DataFrame({ 'CLASS' : self.classes,
-                            'OUTPUT' : probs })
-        df = df.sort_values(['OUTPUT'], ascending=[False])
-        df = df.head(10)
+        df = pd.DataFrame({ 'LABELS' : self.classes,
+                            'PROBS' : probs })
+        df = df.sort_values(['PROBS'], ascending=[False])
+        df = df.head(5)
         
         return df
