@@ -2,7 +2,7 @@ from fastai import *
 from fastai.vision import *
 import json
 
-class Predictor:
+class Predict:
     
     def __init__(self):
         self.data_path = Path("DATA")
