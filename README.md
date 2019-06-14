@@ -1,6 +1,6 @@
 # fastai-course
 
-Ciao come *stai*:
+Ciao --come-- *stai*:
 - vieni
 - vai
 
